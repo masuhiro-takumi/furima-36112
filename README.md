@@ -45,7 +45,7 @@ has_one :purchase_history
 ### associations
 belongs_to :user
 belongs_to :item
-has_one :purchasers
+has_one :purchaser
 
 ###  purchasers テーブル
 
