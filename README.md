@@ -16,7 +16,7 @@
 
 ### Association
 has_many :items
-has_one :purchase_history
+has_many :purchase_histories
 
 ### items テーブル
 
@@ -29,12 +29,12 @@ has_one :purchase_history
 | delivery_charge_id | integer    | null: false |
 | prefecture_id      | integer    | null: false |
 | days_to_ship_id    | integer    | null: false |
-| place              | integer    | null: false |
+| price              | integer    | null: false |
 | user               | references | null: false, foreign_key: true |
 
 ### associations
 belongs_to :user
-belongs_to :purchase_history
+has_one :purchase_history
 
 ###  purchase_histories テーブル
 | Column             | Type       | Options                        |
@@ -44,18 +44,20 @@ belongs_to :purchase_history
 
 ### associations
 belongs_to :user
-has_many :items
-has_one :buyer_information
+belongs_to :item
+has_one :purchasers
 
-###  buyer_information テーブル
+###  purchasers テーブル
 
 | Column             | Type       | Options     |
 | ------------------ | ---------- | ----------- |
 | prefecture_id      | integer    | null: false |
+| postal_code        | string     | null: false |
 | municipality       | string     | null: false |
 | address            | string     | null: false |
-| building_name      | string     | null: false |
-| phone_number       | integer    | null: false |
+| building_name      | string     |
+| phone_number       | string     | null: false |
+| purchase_history   | references | null: false, foreign_key: true |
 
 ### associations
 belongs_to :purchase_history
