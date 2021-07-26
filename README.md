@@ -1,24 +1,65 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| email              | string | null: false, unique: true |
+| encrypted_password | string | null: false |
+| first_name         | string | null: false |
+| first_name_kana    | string | null: false |
+| last_name          | string | null: false |
+| last_name_kana     | string | null: false |
+| nickname           | string | null: false |
+| birthday           | date   | null: false |
 
-* Ruby version
 
-* System dependencies
+### Association
+has_many :items
+has_many :purchase_histories
 
-* Configuration
+### items テーブル
 
-* Database creation
+| Column             | Type       | Options     |
+| ------------------ | ---------- | ----------- |
+| name               | string     | null: false |
+| text               | text       | null: false |
+| category_id        | integer    | null: false |
+| state_id           | integer    | null: false |
+| delivery_charge_id | integer    | null: false |
+| prefecture_id      | integer    | null: false |
+| days_to_ship_id    | integer    | null: false |
+| price              | integer    | null: false |
+| user               | references | null: false, foreign_key: true |
 
-* Database initialization
+### associations
+belongs_to :user
+has_one :purchase_history
 
-* How to run the test suite
+###  purchase_histories テーブル
+| Column             | Type       | Options                        |
+| ------------------ | ---------- | ------------------------------ |
+| item               | references | null: false, foreign_key: true |
+| user               | references | null: false, foreign_key: true |
 
-* Services (job queues, cache servers, search engines, etc.)
+### associations
+belongs_to :user
+belongs_to :item
+has_one :purchaser
 
-* Deployment instructions
+###  purchasers テーブル
 
-* ...
+| Column             | Type       | Options     |
+| ------------------ | ---------- | ----------- |
+| prefecture_id      | integer    | null: false |
+| postal_code        | string     | null: false |
+| municipality       | string     | null: false |
+| address            | string     | null: false |
+| building_name      | string     |
+| phone_number       | string     | null: false |
+| purchase_history   | references | null: false, foreign_key: true |
+
+### associations
+belongs_to :purchase_history
+
+
