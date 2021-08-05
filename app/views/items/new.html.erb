@@ -5,7 +5,7 @@
   </header>
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
-    <%= form_with local: true do |f| %>
+    <%= form_with model:@item, local: true do |f| %>
 
     <%# インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
     <%# render 'shared/error_messages', model: f.object %>
@@ -55,7 +55,7 @@
           商品の状態
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:sales_state_id, Sales_state.all, :id, :name, {}, {class:"select-box", id:"item-sales-status"}) %>
+        <%= f.collection_select(:sales_state_id, SalesState.all, :id, :name, {}, {class:"select-box", id:"item-sales-status"}) %>
       </div>
     </div>
     <%# /商品の詳細 %>
@@ -71,7 +71,7 @@
           配送料の負担
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:delivery_charge_id, Delivery_charge.all, :id, :name, {}, {class:"select-box", id:"item-shipping-fee-status"}) %>
+        <%= f.collection_select(:delivery_charge_id, DeliveryCharge.all, :id, :name, {}, {class:"select-box", id:"item-shipping-fee-status"}) %>
         <div class="weight-bold-text">
           発送元の地域
           <span class="indispensable">必須</span>
@@ -81,7 +81,7 @@
           発送までの日数
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:day_to_ship_id, Day_to_ship.all, :id, :name, {}, {class:"select-box", id:"item-scheduled-delivery"}) %>
+        <%= f.collection_select(:day_to_ship_id, DayToShip.all, :id, :name, {}, {class:"select-box", id:"item-scheduled-delivery"}) %>
       </div>
     </div>
     <%# /配送について %>
