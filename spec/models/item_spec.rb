@@ -95,7 +95,7 @@ require 'rails_helper'
           @item.valid?
           expect(@item.errors.full_messages).to include("Image can't be blank")
         end
-        it 'imageがからだと登録できない' do
+        it 'userがからだと登録できない' do
           @item.user = nil
           @item.valid?
           expect(@item.errors.full_messages).to include("User must exist")
