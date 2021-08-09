@@ -85,10 +85,20 @@ require 'rails_helper'
           expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
         end
 
+        it 'priceは半角英数字混合では登録できない' do
+        @item.price = '10abc00'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
+        end
         it 'imageがからだと登録できない' do
           @item.image = nil
           @item.valid?
           expect(@item.errors.full_messages).to include("Image can't be blank")
+        end
+        it 'imageがからだと登録できない' do
+          @item.user = nil
+          @item.valid?
+          expect(@item.errors.full_messages).to include("User must exist")
         end
       end
     end
