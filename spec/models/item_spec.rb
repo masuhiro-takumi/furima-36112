@@ -67,6 +67,13 @@ require 'rails_helper'
           expect(@item.errors.full_messages).to include("Price is not a number")
         end
 
+        it 'priceが半角数字じゃないと登録できない' do
+          @item.price = '３３３３３'
+          @item.valid?
+          binding.pry
+          expect(@item.errors.full_messages).to include("Price is not a number")
+        end
+
         it 'priceが300より小さい数字だと登録できない' do
           @item.price = '299'
           @item.valid?
