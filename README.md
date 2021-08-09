@@ -23,12 +23,12 @@ has_many :purchase_histories
 | Column             | Type       | Options     |
 | ------------------ | ---------- | ----------- |
 | name               | string     | null: false |
-| text               | text       | null: false |
+| content            | text       | null: false |
 | category_id        | integer    | null: false |
-| state_id           | integer    | null: false |
+| sales_state_id     | integer    | null: false |
 | delivery_charge_id | integer    | null: false |
 | prefecture_id      | integer    | null: false |
-| days_to_ship_id    | integer    | null: false |
+| day_to_ship_id     | integer    | null: false |
 | price              | integer    | null: false |
 | user               | references | null: false, foreign_key: true |
 
