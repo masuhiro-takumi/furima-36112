@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit]
+  before_action :authenticate_user!, only: [:new, :edit, :create, :update]
   before_action :set_item, only: [:edit, :show, :update]
   before_action :move_to_index, except:  [:index, :show]
 
@@ -12,7 +12,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.create(item_params)
+    @item = Item.new(item_params)
     if @item.save
       redirect_to root_path
     else
@@ -31,7 +31,7 @@ class ItemsController < ApplicationController
   def update
     @item.update(item_params)
     if @item.save
-      redirect_to root_path
+      redirect_to item_path
     else
       render :edit
     end
@@ -48,7 +48,7 @@ class ItemsController < ApplicationController
   end
 
   def move_to_index
-    unless user_signed_in? && current_user.id == @item.user_id
+    unless current_user.id == @item.user_id
       redirect_to action: :index
     end
   end
