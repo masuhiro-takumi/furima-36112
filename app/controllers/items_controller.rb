@@ -65,7 +65,6 @@ class ItemsController < ApplicationController
   end
 
   def item_presence 
-    @item = Item.find(params[:id])
     if @item.purchase_history.present? 
       redirect_to root_path
     end
