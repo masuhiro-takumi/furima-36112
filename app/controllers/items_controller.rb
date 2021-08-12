@@ -2,6 +2,8 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_item, only: [:edit, :show, :update, :destroy]
   before_action :move_to_index, except:  [:index, :show]
+  before_action :item_presence, only: [:edit, :update, :destory]
+
 
   def index
     @items = Item.order("created_at DESC")
@@ -25,9 +27,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
-     if @item.purchase_history.present? 
-      redirect_to root_path
-     end
+     
   end
 
   def update
@@ -64,4 +64,10 @@ class ItemsController < ApplicationController
     end
   end
 
+  def item_presence 
+    @item = Item.find(params[:id])
+    if @item.purchase_history.present? 
+      redirect_to root_path
+    end
+  end
 end

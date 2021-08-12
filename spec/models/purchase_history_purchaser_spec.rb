@@ -100,10 +100,28 @@ RSpec.describe PurchaseHistoryPurchaser, type: :model do
         expect(@purchase_history_purchaser.errors.full_messages).to include("Phone number is invalid")
        end
 
+       it 'phone_numberは英数混合では登録できない' do
+        @purchase_history_purchaser.phone_number = 'aaa00001111'
+        @purchase_history_purchaser.valid?
+        expect(@purchase_history_purchaser.errors.full_messages).to include("Phone number is invalid")
+       end
+
        it "tokenが空では登録できないこと" do
         @purchase_history_purchaser.token = nil
         @purchase_history_purchaser.valid?
         expect(@purchase_history_purchaser.errors.full_messages).to include("Token can't be blank")
+      end
+
+      it "tokenが空では登録できないこと" do
+        @purchase_history_purchaser.user_id = nil
+        @purchase_history_purchaser.valid?
+        expect(@purchase_history_purchaser.errors.full_messages).to include("User can't be blank")
+      end
+
+      it "tokenが空では登録できないこと" do
+        @purchase_history_purchaser.item_id = nil
+        @purchase_history_purchaser.valid?
+        expect(@purchase_history_purchaser.errors.full_messages).to include("Item can't be blank")
       end
     end
   end

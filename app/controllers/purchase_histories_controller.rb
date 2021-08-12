@@ -2,15 +2,17 @@ class PurchaseHistoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :sold_out_item, only: [:index]
   before_action :purchaser
+  before_action :set_item
 
   def index
-    @item = Item.find(params[:item_id])
     @purchase_history_purchaser = PurchaseHistoryPurchaser.new
   end
 
   def create
+    if @item.purchase_history.present? 
+      redirect_to root_path
+    end
     @purchase_history_purchaser = PurchaseHistoryPurchaser.new(purchase_history_params)
-    @item = Item.find(params[:item_id])
     if @purchase_history_purchaser.valid?
       Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
       Payjp::Charge.create(
@@ -22,7 +24,6 @@ class PurchaseHistoriesController < ApplicationController
       redirect_to root_path
     else
       render :index
-      
     end
   end
 
@@ -44,5 +45,9 @@ class PurchaseHistoriesController < ApplicationController
     if @item.user_id == current_user.id
       redirect_to root_path
     end
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 end
