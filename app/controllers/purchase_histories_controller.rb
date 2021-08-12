@@ -1,13 +1,14 @@
 class PurchaseHistoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :sold_out_item, only: [:index]
+  before_action :purchaser
+
   def index
     @item = Item.find(params[:item_id])
     @purchase_history_purchaser = PurchaseHistoryPurchaser.new
   end
 
   def create
-    binding.pry
     @purchase_history_purchaser = PurchaseHistoryPurchaser.new(purchase_history_params)
     @item = Item.find(params[:item_id])
     if @purchase_history_purchaser.valid?
@@ -33,8 +34,15 @@ class PurchaseHistoriesController < ApplicationController
 
   def sold_out_item
     @item = Item.find(params[:item_id])
-    redirect_to root_path if @item.purchase_history.present?
-   end
+     if @item.purchase_history.present?
+      redirect_to root_path
+     end
+  end
 
-
+  def purchaser
+    @item = Item.find(params[:item_id])
+    if @item.user_id == current_user.id
+      redirect_to root_path
+    end
+  end
 end
